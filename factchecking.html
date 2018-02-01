@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <script src="helper.js"></script>
+  </head>
+
+  <body>
+    <p>Here is the output</p>
+
+    <div id="_pfTarget"><!-- This is the div where your widget will display --></div>
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+
+    <script type="text/javascript">
+//
+// Okay, here's a basic jQuery widget walkthrough.
+// 1.) Set up your function to run when the document is finished loading.
+//
+    $(document).ready(function(){
+    //
+    // 2.) When the document is ready, load some JSON from our API. JSON is our friend.
+    //
+        var count=6;
+        var type="people";
+        var title="bill-clinton";
+        var theurl = "http://www.politifact.com/api/statements/truth-o-meter/"+type+"/"+title+"/json/?n="+count+"&callback=?";
+
+        $.getJSON(theurl,
+        //
+        // 3.) Once we have our JSON loaded, let's do a function with it.
+        // We'll name our loaded JSON data ... 'data'. You know, easy.
+        //
+        function(data)
+        {
+            //
+            // 4.) Let's create a variable to hold our HTML.
+            // We'll call our variable ... pfHTML, and put a nice header in it.
+            //
+            var pfHTML = '<h1>Recent statements at PolitiFact</h1>';
+
+            //
+            // 5.) Now, we need to loop through each item in our JSON data.
+            // We're asking for 3 items now, but this works for 1 or 100.
+            //
+            $.each(data, function(index,item){ // index is the count; item is the data.
+                //
+                // 6.) For each statement, grab the headline and URL.
+                // Append this string of HTML to the pfHTML variable for use later.
+                //
+                index = index+1; // The index starts with 0; add 1 to make it human-friendly
+                var temp="www.politifact.com"+item.statement_url;
+                pfHTML += '<h3><a href="'+temp+'">'+index+'.) '+item.ruling_headline+'</a></h3>';
+                console.log(item);
+                console.log("url:   "+temp);
+                // console.log("headline:   "+item.ruling_headline);
+
+
+            });
+            //
+            // 7.) Take all of the HTML written to pfHTML and append it a DIV on the page.
+            // Specifically, append it to the DIV with the ID _pfTarget.
+            //
+            $('#_pfTarget').append(pfHTML);
+        }
+        );
+    });
+    </script>
+
+  </body>
+</html>
