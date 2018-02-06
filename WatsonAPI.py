@@ -20,9 +20,12 @@ response = natural_language_understanding.analyze(
 
   text=data,
   features=Features(
-    entities=EntitiesOptions(
-      limit=50),
+    concepts=ConceptsOptions(
+    limit=8),
     keywords=KeywordsOptions(
+    limit=50),
+    entities=EntitiesOptions(
+      model='en-news',
       limit=50),
     semantic_roles=SemanticRolesOptions(
         entities=True,
