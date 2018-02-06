@@ -16,8 +16,8 @@ natural_language_understanding = NaturalLanguageUnderstandingV1(
   version='2017-02-27')
 
 response = natural_language_understanding.analyze(
-                                         
-                                                
+
+
   text=data,
   features=Features(
     entities=EntitiesOptions(
@@ -31,5 +31,3 @@ response = natural_language_understanding.analyze(
   return_analyzed_text=True)
 
 print(json.dumps(response, indent=2))
-
-
