@@ -55,3 +55,9 @@ for i in range (len(sem)):
                 target.append(str(candidate))
 
 print(target)
+
+
+f = open('testing.txt','a')
+for i in range (len(target)):
+    f.write(target[i]+'\n')
+f.close()
