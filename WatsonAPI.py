@@ -6,9 +6,9 @@ from watson_developer_cloud.natural_language_understanding_v1 \
 
 
 data=''
-with open ("oneminutetext.txt", "r") as myfile:
+with open ("AnotherMinute.txt", "r") as myfile:
     data=myfile.read()
-    print(data)
+    # print(data)
 
 
 natural_language_understanding = NaturalLanguageUnderstandingV1(
@@ -32,27 +32,32 @@ sem=response['semantic_roles']
 # print(type(sem))
 # print(len(sem))
 for i in range (len(sem)):
+    record=sem[i]
+
     # action
-    candidate=sem[i]['action']['text']
-    target.append(str(candidate))
+    if 'action' in record:
+        candidate=record['action']['text']
+        target.append(str(candidate))
 
     # object
-    objdict=sem[i]['object']
-    for key,value in objdict.iteritems():
-        # print(key)
-        if(key=='keywords'):
-            for j in range (len(value)):
-                candidate=value[j]['text']
-                target.append(str(candidate))
+    if 'object' in record:
+        objdict=record['object']
+        for key,value in objdict.iteritems():
+            # print(key)
+            if(key=='keywords'):
+                for j in range (len(value)):
+                    candidate=value[j]['text']
+                    target.append(str(candidate))
 
     # subject
-    subdict=sem[i]['subject']
-    for key,value in subdict.iteritems():
-        # print(key)
-        if(key=='keywords'):
-            for j in range (len(value)):
-                candidate=value[j]['text']
-                target.append(str(candidate))
+    if 'subject' in record:
+        subdict=record['subject']
+        for key,value in subdict.iteritems():
+            # print(key)
+            if(key=='keywords'):
+                for j in range (len(value)):
+                    candidate=value[j]['text']
+                    target.append(str(candidate))
 
 print(target)
 
