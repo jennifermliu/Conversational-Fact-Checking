@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <script src="helper.js"></script>
+
   </head>
 
   <body>
@@ -23,53 +23,101 @@
 // Okay, here's a basic jQuery widget walkthrough.
 // 1.) Set up your function to run when the document is finished loading.
 //
+
     $(document).ready(function(){
     //
     // 2.) When the document is ready, load some JSON from our API. JSON is our friend.
     //
-        var count=6;
-        var type="people";
-        var title="bill-clinton";
-        var theurl = "http://www.politifact.com/api/statements/truth-o-meter/"+type+"/"+title+"/json/?n="+count+"&callback=?";
 
-        $.getJSON(theurl,
+
+
+        // var obj = 'pls change';
+        // fetch('http://localhost:8080/statement.txt')
+        //   .then(res => res.text())
+        //   .then(data => obj = data)
+        //   .then(console.log)
+        //   .then(() => console.log(obj))
+
+        // var my_text;
         //
-        // 3.) Once we have our JSON loaded, let's do a function with it.
-        // We'll name our loaded JSON data ... 'data'. You know, easy.
+        // var client = new XMLHttpRequest();
+        // client.open('GET', 'http://localhost:8080/statement.txt');
+        // client.onreadystatechange = function() {
+        //   alert(client.responseText);
+        // }
+        // client.send();
+
+        // var my_text = null;
         //
-        function(data)
-        {
-            //
-            // 4.) Let's create a variable to hold our HTML.
-            // We'll call our variable ... pfHTML, and put a nice header in it.
-            //
-            var pfHTML = '<h1>Recent statements at PolitiFact</h1>';
+        // function myCallback(data) {
+        //   alert("Data Loaded:" + data);
+        //   my_text = data;
+        // }
+        //
+        // pulls text file into javascript, have to do it through a server
+        var my_text
+        jQuery.get('http://localhost:8080/statement.txt', function(data) {
+          my_text = data;
+        //array with each line
+        //lines = my_text.split("\n");
 
-            //
-            // 5.) Now, we need to loop through each item in our JSON data.
-            // We're asking for 3 items now, but this works for 1 or 100.
-            //
-            $.each(data, function(index,item){ // index is the count; item is the data.
-                //
-                // 6.) For each statement, grab the headline and URL.
-                // Append this string of HTML to the pfHTML variable for use later.
-                //
-                index = index+1; // The index starts with 0; add 1 to make it human-friendly
-                var temp="www.politifact.com"+item.statement_url;
-                pfHTML += '<h3><a href="'+temp+'">'+index+'.) '+item.ruling_headline+'</a></h3>';
-                console.log(item);
-                console.log("url:   "+temp);
-                // console.log("headline:   "+item.ruling_headline);
+        //array with words in text files
+        words = my_text.split(/\s+/);
+        console.log(words);
+          //Find way to pull line by line
+
+          var count=6;
+          var type="people";
+          var title="bill-clinton";
+          var theurl = "http://www.politifact.com/api/statements/truth-o-meter/"+type+"/"+title+"/json/?n="+count+"&callback=?";
+          $.getJSON(theurl,
+          //
+          // 3.) Once we have our JSON loaded, let's do a function with it.
+          // We'll name our loaded JSON data ... 'data'. You know, easy.
+          //
+          function(data)
+          {
+              //
+              // 4.) Let's create a variable to hold our HTML.
+              // We'll call our variable ... pfHTML, and put a nice header in it.
+              //
+              var pfHTML = '<h1>Recent statements at PolitiFact</h1>';
+
+              //
+              // 5.) Now, we need to loop through each item in our JSON data.
+              // We're asking for 3 items now, but this works for 1 or 100.
+              //
+              $.each(data, function(index,item){ // index is the count; item is the data.
+                  //
+                  // 6.) For each statement, grab the headline and URL.
+                  // Append this string of HTML to the pfHTML variable for use later.
+                  //
+                  index = index+1; // The index starts with 0; add 1 to make it human-friendly
+                  var temp="www.politifact.com"+item.statement_url;
+                  pfHTML += '<h3><a href="'+temp+'">'+index+'.) '+item.ruling_headline+'</a></h3>';
+                  console.log(item);
+                  console.log("url:   "+temp);
+                  // console.log("headline:   "+item.ruling_headline);
 
 
-            });
-            //
-            // 7.) Take all of the HTML written to pfHTML and append it a DIV on the page.
-            // Specifically, append it to the DIV with the ID _pfTarget.
-            //
-            $('#_pfTarget').append(pfHTML);
-        }
-        );
+              });
+              //
+              // 7.) Take all of the HTML written to pfHTML and append it a DIV on the page.
+              // Specifically, append it to the DIV with the ID _pfTarget.
+              //
+              $('#_pfTarget').append(pfHTML);
+          }
+          );
+        });
+
+
+
+// the rest of your code
+
+
+        //console.log(my_text)
+
+
     });
     </script>
 
