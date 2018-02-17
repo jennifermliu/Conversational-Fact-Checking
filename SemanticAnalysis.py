@@ -6,7 +6,7 @@ from watson_developer_cloud.natural_language_understanding_v1 \
 
 
 data=''
-with open ("AnotherMinute.txt", "r") as myfile:
+with open ("statement.txt", "r") as myfile:
     data=myfile.read()
     # print(data)
 
@@ -24,20 +24,29 @@ response = natural_language_understanding.analyze(
     semantic_roles=SemanticRolesOptions (entities=True,keywords=True,limit=50)),
     return_analyzed_text=True)
 
-# print(json.dumps(response, indent=2))
+print(json.dumps(response, indent=2))
 
-target=[]
+
+#################################################
+#extract keywords from semantic analysis
+
+subjectlist=[]
+peoplelist=[]
+# semantic roles
+### object
+#####keywords
+#######text___
+### subject
+#####keywords
+#######text___
 sem=response['semantic_roles']
-# print(sem)
-# print(type(sem))
-# print(len(sem))
 for i in range (len(sem)):
     record=sem[i]
 
     # action
-    if 'action' in record:
-        candidate=record['action']['text']
-        target.append(str(candidate))
+    # if 'action' in record:
+    #     candidate=record['action']['text']
+    #     target.append(str(candidate))
 
     # object
     if 'object' in record:
@@ -47,7 +56,7 @@ for i in range (len(sem)):
             if(key=='keywords'):
                 for j in range (len(value)):
                     candidate=value[j]['text']
-                    target.append(str(candidate))
+                    subjectlist.append(str(candidate))
 
     # subject
     if 'subject' in record:
@@ -57,12 +66,51 @@ for i in range (len(sem)):
             if(key=='keywords'):
                 for j in range (len(value)):
                     candidate=value[j]['text']
-                    target.append(str(candidate))
+                    subjectlist.append(str(candidate))
 
-print(target)
+# entities
+###if type is person
+###disambiguation
+#####name___add to peoplelist
+###no disambiguation
+###text___add to peoplelist
+###else
+#####text___
+ent=response['entities']
+for i in range (len(ent)):
+    record=ent[i]
+    if 'type' in record:
+        if record['type']=='Person':
+            if 'disambiguation' in record:
+                candidate=record['disambiguation']['name']
+                peoplelist.append(str(candidate))
+            else:
+                candidate=record['text']
+                peoplelist.append(str(candidate))
+        else:
+            candidate=record['text']
+            subjectlist.append(str(candidate))
 
 
-f = open('testing.txt','a')
-for i in range (len(target)):
-    f.write(target[i]+'\n')
+# concepts
+### text___
+concepts=response['concepts']
+for i in range (len(concepts)):
+    record=concepts[i]
+    if 'text' in record:
+        candidate=record['text']
+        subjectlist.append(str(candidate))
+
+print(peoplelist)
+print(subjectlist)
+
+
+f = open('peoplelist.txt','a')
+for i in range (len(peoplelist)):
+    f.write(peoplelist[i]+'\n')
+f.close()
+
+f = open('subjectlist.txt','a')
+for i in range (len(subjectlist)):
+    f.write(subjectlist[i]+'\n')
 f.close()
