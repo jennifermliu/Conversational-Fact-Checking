@@ -105,12 +105,27 @@ print(peoplelist)
 print(subjectlist)
 
 
-f = open('peoplelist.txt','a')
+polipeople={'barack-obama','hillary-clinton'}
+peopledict=set(polipeople)
+
+polisubject={'election'}
+subjectdict=set(polisubject)
+
+
+
+f = open('peoplelist.txt','w')
 for i in range (len(peoplelist)):
-    f.write(peoplelist[i]+'\n')
+    temp = peoplelist[i].lower()
+    temp = temp.replace(' ','-')
+    # print(temp)
+    if temp in peopledict:
+        f.write(temp+'\n')
 f.close()
 
-f = open('subjectlist.txt','a')
+f = open('subjectlist.txt','w')
 for i in range (len(subjectlist)):
-    f.write(subjectlist[i]+'\n')
+    temp = subjectlist[i].lower()
+    temp = temp.replace(' ','-')
+    if temp in subjectdict:
+        f.write(temp+'\n')
 f.close()
