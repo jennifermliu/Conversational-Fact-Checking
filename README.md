@@ -10,7 +10,9 @@ statement.txt: simple example to test semantic analysis (for testing purposes)
 
 SemanticAnalysis.py: get the one-minute text, run the Watson API for get semantic analysis, find keywords and send to text file as input for Politifact API
 
-testing.txt: keywords for Politifact API
+subjectlist.txt: subject keywords for Politifact API
+
+peoplelist.txt: people keywords for Politifact API
 
 factchecking.html: access the Politifact API by constructing an url from keywords 
 
