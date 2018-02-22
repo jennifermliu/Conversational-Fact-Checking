@@ -8,6 +8,10 @@ AnotherMinute.txt: alternative one-minute text (for testing purposes)
 
 statement.txt: simple example to test semantic analysis (for testing purposes)
 
+subject.json: subject list from Politifact API
+
+people.json: people list from Politifact API
+
 SemanticAnalysis.py: get the one-minute text, run the Watson API for get semantic analysis, find keywords and send to text file as input for Politifact API
 
 subjectlist.txt: subject keywords for Politifact API
