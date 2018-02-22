@@ -7,7 +7,7 @@ from watson_developer_cloud.natural_language_understanding_v1 \
 
 
 data=''
-with open ("statement.txt", "r") as myfile:
+with open ("oneminutetext.txt", "r") as myfile:
     data=myfile.read()
     # print(data)
 
