@@ -1,4 +1,5 @@
 import json
+import csv
 from watson_developer_cloud import NaturalLanguageUnderstandingV1
 from watson_developer_cloud.natural_language_understanding_v1 \
   import Features, EntitiesOptions, KeywordsOptions, CategoriesOptions, ConceptsOptions, RelationsOptions, SemanticRolesOptions
@@ -105,12 +106,27 @@ print(peoplelist)
 print(subjectlist)
 
 
-polipeople={'barack-obama','hillary-clinton'}
+polipeople=[]
+polisubject=[]
+
+
+with open('subjectdictionary.csv','rb') as csvfile:
+    reader=csv.reader(csvfile)
+    for row in reader:
+        for i in range (len(row)):
+            # print row[i]
+            polisubject.append(row[i])
+
+with open('peopledictionary.csv','rb') as csvfile:
+    reader=csv.reader(csvfile)
+    for row in reader:
+        for i in range (len(row)):
+            # print row[i]
+            polipeople.append(row[i])
+
+
 peopledict=set(polipeople)
-
-polisubject={'election'}
 subjectdict=set(polisubject)
-
 
 
 f = open('peoplelist.txt','w')
