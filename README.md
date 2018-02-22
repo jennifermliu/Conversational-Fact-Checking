@@ -12,6 +12,10 @@ subject.json: subject list from Politifact API
 
 people.json: people list from Politifact API
 
+subjectdictionary.csv : csv version of subject.json
+
+peopledictionary.csv : csv version of people.json
+
 SemanticAnalysis.py: get the one-minute text, run the Watson API for get semantic analysis, find keywords and send to text file as input for Politifact API
 
 subjectlist.txt: subject keywords for Politifact API
