@@ -8,14 +8,20 @@ from paralleldots import set_api_key, get_api_key, similarity, ner, taxonomy, se
 #DO NOT randomly test, limited to 100 calls/day, for testing go to: https://www.paralleldots.com/semantic-analysis
 # more API examples here: https://github.com/ParallelDots/ParallelDots-Python-API
 
+# api key for paralleldots
 set_api_key("d8v9gnGdk06CfiB3lxGkAd3fiQafeUTPUdmBniHhIoc")
 
+
+# input: a txt file name as string
+# output: text as string
 def readOneMinuteText(f):
     data=''
     with open(f, "r") as myfile:
         data=myfile.read()
     return data
 
+# input: string
+# output: dictionary
 def semanticAnalysis(data):
     natural_language_understanding = NaturalLanguageUnderstandingV1(
         username='dcc4c5d9-682d-4eb7-8360-fe8d010b84de',
@@ -31,7 +37,8 @@ def semanticAnalysis(data):
     #print(json.dumps(response, indent=2))
     return response
 
-
+# input: dictionary
+# output: string array, string array
 def extractKeywords(response):
     subjectlist=[]
     peoplelist=[]
@@ -82,7 +89,8 @@ def extractKeywords(response):
     # print(subjectlist)
     return peoplelist,subjectlist
 
-
+# input: none
+# output: dictionary, dictionary
 def constructDict():
     polipeople=[]
     polisubject=[]
@@ -102,6 +110,9 @@ def constructDict():
     subjectdict=set(polisubject)
     return peopledict,subjectdict
 
+
+# input: string array, string array, string dictionary, string dictionary
+# output: string array, string array
 def getAcceptedKeywords(peoplelist,subjectlist,peopledict,subjectdict):
     pl=[]
     sl=[]
@@ -109,15 +120,18 @@ def getAcceptedKeywords(peoplelist,subjectlist,peopledict,subjectdict):
         temp = peoplelist[i].lower()
         temp = temp.replace(' ','-')
         if temp in peopledict:
-            pl.append(temp)
+            if temp not in pl:
+                pl.append(temp)
     for i in range (len(subjectlist)):
         temp = subjectlist[i].lower()
         temp = temp.replace(' ','-')
         if temp in subjectdict:
-            sl.append(temp)
+            if temp not in sl:
+                sl.append(temp)
     return pl,sl
 
-
+# input: string array, string array
+# output: string array, string array
 def getHeadlines(people,subjects):
     editions = ["truth-o-meter", "global-news", "punditfact"]
     count="6"
@@ -125,34 +139,38 @@ def getHeadlines(people,subjects):
     urls=[]
     for i in range(len(people)):
         title=people[i]
-        if(title!=""):
+        if title != "":
             for j in range(len(editions)):
                 url = "http://www.politifact.com/api/statements/"+editions[j]+"/"+"people"+"/"+title+"/json/?n="+count+"&callback=?"
                 response = requests.get(url)
-                data = response.json()
-                for k in range(len(data)):
-                    entry = data[k]
-                    headline = entry['ruling_headline'].encode('utf8')
-                    url = "www.politifact.com"  + entry['statement_url'].encode('utf8')
-                    headlines.append(headline)
-                    urls.append(url)
+                if response:
+                    data = response.json()
+                    for k in range(len(data)):
+                        entry = data[k]
+                        headline = entry['ruling_headline'].encode('utf8')
+                        url = "www.politifact.com"  + entry['statement_url'].encode('utf8')
+                        headlines.append(headline)
+                        urls.append(url)
 
     for i in range(len(subjects)):
-        title=subject[i]
-        if(title!=""):
+        title=subjects[i]
+        if title != "":
             for j in range(len(editions)):
-                url = "http://www.politifact.com/api/statements/"+editions[j]+"/"+"subject"+"/"+title+"/json/?n="+count+"&callback=?"
+                url = "http://www.politifact.com/api/statements/"+editions[j]+"/"+"subjects"+"/"+title+"/json/?n="+count+"&callback=?"
                 response = requests.get(url)
-                data = response.json()
-                for k in range(len(data)):
-                    entry = data[k]
-                    headline = entry['ruling_headline'].encode('utf8')
-                    url = "www.politifact.com"  + entry['statement_url'].encode('utf8')
-                    headlines.append(headline)
-                    urls.append(url)
+                if response:
+                    data = response.json()
+                    for k in range(len(data)):
+                        entry = data[k]
+                        headline = entry['ruling_headline'].encode('utf8')
+                        url = "www.politifact.com"  + entry['statement_url'].encode('utf8')
+                        headlines.append(headline)
+                        urls.append(url)
 
     return headlines,urls
 
+# input: string array, string array, string
+# output: string, int, string
 def getSimilarScore(headlines,urls,statement):
     maxScore=0
     best=""
@@ -172,20 +190,27 @@ def getSimilarScore(headlines,urls,statement):
 
 
 
-
 def main():
     data=readOneMinuteText("oneminutetext.txt")
     result=semanticAnalysis(data)
     peoplelist,subjectlist=extractKeywords(result)
+    print peoplelist
+    print subjectlist
+    print "..........."
     peopledict,subjectdict=constructDict()
     people,subjects=getAcceptedKeywords(peoplelist,subjectlist,peopledict,subjectdict)
+    print people
+    print subjects
+    print "..........."
     headlines,urls=getHeadlines(people,subjects)
-    best,maxScore,url=getSimilarScore(headlines,urls,data)
-
-    print("--------------")
-    print("Here is the best")
-    print(best)
-    print(maxScore)
-    print(url)
+    for i in range(len(headlines)):
+        print headlines[i]
+        print "----------"
+    # best,maxScore,url=getSimilarScore(headlines,urls,data)
+    # print("--------------")
+    # print("Here is the best")
+    # print(best)
+    # print(maxScore)
+    # print(url)
 
 main()
