@@ -94,26 +94,40 @@ def extractKeywords(response):
 def constructDict():
     polipeople=[]
     polisubject=[]
+    synonymdict={}
+
     with open('subjectdictionary.csv','rb') as csvfile:
         reader=csv.reader(csvfile)
         for row in reader:
+            key=""
             for i in range (len(row)):
-                # print row[i]
-                polisubject.append(row[i])
+                if i==0:
+                    key=row[0]
+                    polisubject.append(key)
+                else:
+                    if row[i]!="":
+                        synonymdict[row[i]]=key
     with open('peopledictionary.csv','rb') as csvfile:
         reader=csv.reader(csvfile)
         for row in reader:
             for i in range (len(row)):
-                # print row[i]
-                polipeople.append(row[i])
+                if i ==0:
+                    key=row[0]
+                    polipeople.append(key)
+                else:
+                    if row[i]!="":
+                        synonymdict[row[i]]=key
     peopledict=set(polipeople)
     subjectdict=set(polisubject)
-    return peopledict,subjectdict
+
+    return peopledict,subjectdict,synonymdict
 
 
-# input: string array, string array, string dictionary, string dictionary
+
+
+# input: string array, string array, string dictionary, string dictionary, map
 # output: string array, string array
-def getAcceptedKeywords(peoplelist,subjectlist,peopledict,subjectdict):
+def getAcceptedKeywords(peoplelist,subjectlist,peopledict,subjectdict,synonymdict):
     pl=[]
     sl=[]
     for i in range (len(peoplelist)):
@@ -122,12 +136,28 @@ def getAcceptedKeywords(peoplelist,subjectlist,peopledict,subjectdict):
         if temp in peopledict:
             if temp not in pl:
                 pl.append(temp)
+        if peoplelist[i] in synonymdict:
+            value=synonymdict[peoplelist[i]]
+            if value not in pl:
+                pl.append(value)
+        if peoplelist[i].lower in synonymdict:
+            value=synonymdict[peoplelist[i].lower]
+            if value not in pl:
+                pl.append(value)
     for i in range (len(subjectlist)):
         temp = subjectlist[i].lower()
         temp = temp.replace(' ','-')
         if temp in subjectdict:
             if temp not in sl:
                 sl.append(temp)
+        if subjectlist[i] in synonymdict:
+            value=synonymdict[subjectlist[i]]
+            if value not in sl:
+                sl.append(value)
+        if subjectlist[i].lower in synonymdict:
+            value=synonymdict[subjectlist[i].lower]
+            if value not in sl:
+                sl.append(value)
     return pl,sl
 
 # input: string array, string array
@@ -189,7 +219,6 @@ def getSimilarScore(headlines,urls,statement):
     return best,maxScore,urls[bestindex]
 
 
-
 def main():
     data=readOneMinuteText("oneminutetext.txt")
     result=semanticAnalysis(data)
@@ -197,8 +226,8 @@ def main():
     print peoplelist
     print subjectlist
     print "..........."
-    peopledict,subjectdict=constructDict()
-    people,subjects=getAcceptedKeywords(peoplelist,subjectlist,peopledict,subjectdict)
+    peopledict,subjectdict,synonymdict=constructDict()
+    people,subjects=getAcceptedKeywords(peoplelist,subjectlist,peopledict,subjectdict,synonymdict)
     print people
     print subjects
     print "..........."
