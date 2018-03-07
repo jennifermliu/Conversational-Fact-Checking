@@ -219,27 +219,51 @@ def getSimilarScore(headlines,urls,statement):
     return best,maxScore,urls[bestindex]
 
 
+def getAlexaOutput(score):
+    # high confidence, with a high score
+    goodone = "I think I have something. Check your phone."
+    # mid confidence
+    midone="Maybe this will help? Check your phone."
+    # lowerconfidence, with a low score
+    badones=[]
+    # person and subject match
+    badones.append("I don't know for certain, but this could be useful. Check your phone.")
+    # no person match
+    badones.append("I don't know for certain, but here's something else I found on the topic. Check your phone.")
+    # no subject match
+    badones.append("I don't know for certain, but here's something else I found from the same person. Check your phone.")
+    #no headline
+    nothing = "I'm sorry. I couldn't find anything for you."
+    print goodone
+    print midone
+    print badones
+    print nothing
+
+
+
 def main():
     data=readOneMinuteText("oneminutetext.txt")
     result=semanticAnalysis(data)
     peoplelist,subjectlist=extractKeywords(result)
-    print peoplelist
-    print subjectlist
-    print "..........."
+    # print peoplelist
+    # print subjectlist
+    # print "..........."
     peopledict,subjectdict,synonymdict=constructDict()
     people,subjects=getAcceptedKeywords(peoplelist,subjectlist,peopledict,subjectdict,synonymdict)
-    print people
-    print subjects
-    print "..........."
+    # print people
+    # print subjects
+    # print "..........."
     headlines,urls=getHeadlines(people,subjects)
-    for i in range(len(headlines)):
-        print headlines[i]
-        print "----------"
+    # for i in range(len(headlines)):
+    #     print headlines[i]
+    #     print "----------"
+
     # best,maxScore,url=getSimilarScore(headlines,urls,data)
     # print("--------------")
     # print("Here is the best")
     # print(best)
     # print(maxScore)
     # print(url)
+    getAlexaOutput(best)
 
 main()

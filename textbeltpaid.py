@@ -1,7 +1,15 @@
 import requests
 
-phonenumber = '4127600306'
-textmessage = 'Can I Kick It?'
+
+welcome = "Hi! This is your fact checker. Your request to check returned this result:"
+headline = ""
+url = ""
+finish = "Thanks for using the fact checker!"
+phonenumber = "4127600306"
+
+textmessage = welcome + headline + url + finish
+
+
 
 requests.post('https://textbelt.com/text', {
   'phone': phonenumber,
