@@ -9,7 +9,36 @@ from paralleldots import set_api_key, get_api_key, similarity, ner, taxonomy, se
 # more API examples here: https://github.com/ParallelDots/ParallelDots-Python-API
 
 # api key for paralleldots
-set_api_key("d8v9gnGdk06CfiB3lxGkAd3fiQafeUTPUdmBniHhIoc")
+# set_api_key("d8v9gnGdk06CfiB3lxGkAd3fiQafeUTPUdmBniHhIoc")
+
+def download_file_from_google_drive(id, destination):
+    URL = "https://docs.google.com/uc?export=download"
+    session = requests.Session()
+    response = session.get(URL, params = { 'id' : id }, stream = True)
+    token = get_confirm_token(response)
+    if token:
+        params = { 'id' : id, 'confirm' : token }
+        response = session.get(URL, params = params, stream = True)
+    save_response_content(response, destination)
+
+def get_confirm_token(response):
+    for key, value in response.cookies.items():
+        if key.startswith('download_warning'):
+            return value
+    return None
+
+def save_response_content(response, destination):
+    CHUNK_SIZE = 32768
+    with open(destination, "wb") as f:
+        for chunk in response.iter_content(CHUNK_SIZE):
+            if chunk: # filter out keep-alive new chunks
+                f.write(chunk)
+
+
+
+
+
+
 
 
 # input: a txt file name as string
@@ -331,6 +360,13 @@ def sendText(headline,url,ruling):
 
 
 def main():
+    # if __name__ == "__main__":
+    #     file_id = 'TAKE ID FROM SHAREABLE LINK'
+    #     destination = 'DESTINATION FILE ON YOUR DISK'
+    #     download_file_from_google_drive(file_id, destination)
+
+    download_file_from_google_drive('1e9YQ9yN8QmXT0sfHS9XqPDfox8Vc_XKN', 'oneminutetext.txt')
+
     data=readOneMinuteText("oneminutetext.txt")
     result=semanticAnalysis(data)
     peoplelist,subjectlist=extractKeywords(result)
@@ -368,4 +404,5 @@ def main():
 
 finaloutput=main()
 print("--------------")
+print("final output: ")
 print finaloutput
