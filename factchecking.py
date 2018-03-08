@@ -164,9 +164,15 @@ def getAcceptedKeywords(peoplelist,subjectlist,peopledict,subjectdict,synonymdic
 # output: string array, string array
 def getHeadlines(people,subjects):
     editions = ["truth-o-meter", "global-news", "punditfact"]
-    count="6"
+    count="2"
     headlines=[]
+    statements=[]
     urls=[]
+    headlinesubjects=[]
+    headlinepeople=[]
+    headlinetargets=[]
+    photolinks=[]
+    rulings=[]
     for i in range(len(people)):
         title=people[i]
         if title != "":
@@ -178,9 +184,26 @@ def getHeadlines(people,subjects):
                     for k in range(len(data)):
                         entry = data[k]
                         headline = entry['ruling_headline'].encode('utf8')
+                        statement = entry['statement'].encode('utf8')
+                        ruling= entry['ruling']['ruling'].encode('utf8')
                         url = "www.politifact.com"  + entry['statement_url'].encode('utf8')
+                        headlinespeaker=entry['speaker']['name_slug']
+                        temptarget=entry['target']
+                        alltargets=[]
+                        for target in temptarget:
+                            alltargets.append(target['name_slug'])
+                        allsubjects=[]
+                        tempsubject = entry['subject']
+                        for i in range (len(tempsubject)):
+                            allsubjects.append(tempsubject[i]['subject_slug'])
                         headlines.append(headline)
+                        statements.append(statement)
                         urls.append(url)
+                        headlinepeople.append(headlinespeaker)
+                        headlinesubjects.append(allsubjects)
+                        headlinetargets.append(alltargets)
+                        rulings.append(ruling)
+
 
     for i in range(len(subjects)):
         title=subjects[i]
@@ -193,51 +216,117 @@ def getHeadlines(people,subjects):
                     for k in range(len(data)):
                         entry = data[k]
                         headline = entry['ruling_headline'].encode('utf8')
+                        statement = entry['statement'].encode('utf8')
+                        ruling= entry['ruling']['ruling'].encode('utf8')
                         url = "www.politifact.com"  + entry['statement_url'].encode('utf8')
+                        headlinespeaker=entry['speaker']['name_slug']
+                        temptarget=entry['target']
+                        alltargets=[]
+                        for target in temptarget:
+                            alltargets.append(target['name_slug'])
+                        allsubjects=[]
+                        tempsubject = entry['subject']
+                        for i in range (len(tempsubject)):
+                            allsubjects.append(tempsubject[i]['subject_slug'])
                         headlines.append(headline)
+                        statements.append(statement)
                         urls.append(url)
+                        headlinepeople.append(headlinespeaker)
+                        headlinesubjects.append(allsubjects)
+                        headlinetargets.append(alltargets)
+                        rulings.append(ruling)
 
-    return headlines,urls
+    print len(headlines)
+    print len(statements)
+    print len(urls)
+    print len(headlinepeople)
+    print len(headlinesubjects)
+    print len(headlinetargets)
+    print len(rulings)
+    return headlines,statements,urls,headlinepeople,headlinesubjects,headlinetargets,rulings
+
 
 # input: string array, string array, string
 # output: string, int, string
-def getSimilarScore(headlines,urls,statement):
+def getSimilarScore(statements,urls,originalstatement):
     maxScore=0
     best=""
     bestindex=0
-    for i in range (len(headlines)):
-        scoredict = similarity(statement, headlines[i])
+    for i in range (len(statements)):
+        scoredict = similarity(originalstatement, statements[i])
         score = scoredict["actual_score"]
-        print("headline "+str(i))
-        print(headlines[i])
+        print("headline statement "+str(i))
+        print(statements[i])
         print(score)
         print("\n")
         if score > maxScore:
-            best=headlines[i]
+            best=statements[i]
             maxScore=score
             bestindex=i
-    return best,maxScore,urls[bestindex]
+    return best,maxScore,urls[bestindex],bestindex
 
 
-def getAlexaOutput(score):
-    # high confidence, with a high score
-    goodone = "I think I have something. Check your phone."
-    # mid confidence
-    midone="Maybe this will help? Check your phone."
-    # lowerconfidence, with a low score
-    badones=[]
-    # person and subject match
-    badones.append("I don't know for certain, but this could be useful. Check your phone.")
-    # no person match
-    badones.append("I don't know for certain, but here's something else I found on the topic. Check your phone.")
-    # no subject match
-    badones.append("I don't know for certain, but here's something else I found from the same person. Check your phone.")
+def getAlexaOutput(score,hlperson, hlsubjects, hltargets, people,subjects,headline,url,ruling):
     #no headline
-    nothing = "I'm sorry. I couldn't find anything for you."
-    print goodone
-    print midone
-    print badones
-    print nothing
+    if(score<0.2):
+        return "I'm sorry. I couldn't find anything for you."
+
+    sendText(headline,url,ruling)
+
+    # high confidence, with a high score
+    if score > 0.9:
+        return "I think I have something. Check your phone."
+    # mid confidence
+    if score > 0.7:
+        return "Maybe this will help? Check your phone."
+
+    matchingsubject=hasSubject(hlsubjects,subjects)
+    matchingperson=hasPeople(hlperson,hltargets,people)
+    # lowerconfidence, with a low score
+    if score > 0.2:
+        # person and subject match
+        if(matchingsubject and matchingperson):
+            return "I don't know for certain, but this could be useful. Check your phone."
+        # no person match
+        if(matchingsubject):
+            return "I don't know for certain, but here's something else I found on the topic. Check your phone."
+        # no subject match
+        if(matchingperson):
+            return "I don't know for certain, but here's something else I found from the same person. Check your phone."
+
+    return "ERROR"
+
+
+
+def hasSubject(hlsubjects,subjects):
+    for hlsubject in hlsubjects:
+        for subject in subjects:
+            if hlsubject == subject:
+                return True
+    return False
+
+def hasPeople(hlperson,hltargets,people):
+    for person in people:
+        if hlperson == person:
+            return True
+    for hltarget in hltargets:
+        for person in people:
+            if hltarget == person:
+                return True
+    return False
+
+
+def sendText(headline,url,ruling):
+    welcome = "Hi! This is your fact checker. Your request to check returned this result:"
+    finish = "Thanks for using the fact checker!"
+    phonenumber = "3122413835"
+    rulingintro = "Politifact rules this claim as "
+    textmessage = welcome + "\n" + headline + "\n" + url + "\n" + rulingintro + ruling + "\n"+ finish
+    requests.post('https://textbelt.com/text', {
+      'phone': phonenumber,
+      'message': textmessage,
+      'key': '0f34d6a08a703c86e9c18f984f21c4d28ba6f2b0v4OUhT8OjUHbHzUUSJFsme6xR',
+    })
 
 
 
@@ -245,25 +334,38 @@ def main():
     data=readOneMinuteText("oneminutetext.txt")
     result=semanticAnalysis(data)
     peoplelist,subjectlist=extractKeywords(result)
-    # print peoplelist
-    # print subjectlist
-    # print "..........."
+    print peoplelist
+    print subjectlist
+    print "..........."
     peopledict,subjectdict,synonymdict=constructDict()
     people,subjects=getAcceptedKeywords(peoplelist,subjectlist,peopledict,subjectdict,synonymdict)
-    # print people
-    # print subjects
-    # print "..........."
-    headlines,urls=getHeadlines(people,subjects)
+    print people
+    print subjects
+    print "..........."
+    headlines,statements,urls,headlinepeople,headlinesubjects,headlinetargets,rulings=getHeadlines(people,subjects)
     # for i in range(len(headlines)):
     #     print headlines[i]
     #     print "----------"
+    # print headlinepeople
+    # print headlinesubjects
+    if len(headlines)==0:
+        return "I'm sorry. I couldn't find anything for you."
 
-    # best,maxScore,url=getSimilarScore(headlines,urls,data)
-    # print("--------------")
-    # print("Here is the best")
-    # print(best)
-    # print(maxScore)
-    # print(url)
-    getAlexaOutput(best)
+    best,maxScore,url,index=getSimilarScore(statements,urls,data)
+    print("--------------")
+    print("Here is the best")
+    print(best)
+    print(maxScore)
+    print(url)
+    print(index)
 
-main()
+    # print headlinepeople[index]
+    # print headlinesubjects[index]
+    # print people
+    # print subjects
+    output=getAlexaOutput(maxScore,headlinepeople[index],headlinesubjects[index],headlinetargets[index],people,subjects,headlines[index],url,rulings[index])
+    return output
+
+finaloutput=main()
+print("--------------")
+print finaloutput

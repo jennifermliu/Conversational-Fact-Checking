@@ -3,11 +3,11 @@ import requests
 
 welcome = "Hi! This is your fact checker. Your request to check returned this result:"
 headline = ""
-url = ""
+url = "http://static.politifact.com.s3.amazonaws.com/politifact/mugs/NYT_TRUMP_CAMPAIGN_5.jpg"
 finish = "Thanks for using the fact checker!"
-phonenumber = "4127600306"
+phonenumber = "3122413835"
 
-textmessage = welcome + headline + url + finish
+textmessage = url 
 
 
 
