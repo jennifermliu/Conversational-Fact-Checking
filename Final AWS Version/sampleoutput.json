@@ -1,0 +1,251 @@
+[
+    {
+        "statement_date": "2018-01-08",
+        "statement_type": {
+            "statement_type": "Claim"
+        },
+        "ruling_headline": "How accurate is Donald Trump about black, Hispanic unemployment?",
+        "ruling": {
+            "canonical_ruling_graphic": "http://static.politifact.com.s3.amazonaws.com/rulings/tom-mostlytrue.png",
+            "ruling_slug": "mostly-true",
+            "ruling": "Mostly True"
+        },
+        "subject": [
+            {
+                "subject": "Economy",
+                "subject_slug": "economy"
+            },
+            {
+                "subject": "Jobs",
+                "subject_slug": "jobs"
+            }
+        ],
+        "ruling_link_text": "Numbers are right; criticism of Democratic record isn't",
+        "speaker": {
+            "last_name": "Trump",
+            "canonical_photo": "http://static.politifact.com.s3.amazonaws.com/politifact/mugs/NYT_TRUMP_CAMPAIGN_5.jpg",
+            "name_slug": "donald-trump",
+            "first_name": "Donald",
+            "party": {
+                "party": "Republican",
+                "party_slug": "republican"
+            }
+        },
+        "target": [
+            {
+                "last_name": "Obama",
+                "canonical_photo": "http://static.politifact.com.s3.amazonaws.com/politifact/mugs/NYT_OBAMA_1.jpg",
+                "name_slug": "barack-obama",
+                "first_name": "Barack",
+                "party": {
+                    "party": "Democrat",
+                    "party_slug": "democrat"
+                }
+            }
+        ],
+        "statement_url": "/truth-o-meter/statements/2018/jan/08/donald-trump/how-accurate-donald-trumps-about-black-hispa/",
+        "statement_context": "a tweet",
+        "ruling_date": "2018-01-08T13:25:51",
+        "statement": "<p>&quot;African American unemployment is the lowest ever recorded in our country. The Hispanic unemployment rate dropped a full point in the last year and is close to the lowest in recorded history. Dems did nothing for you but get your vote!&quot;</p>\r\n"
+    },
+    {
+        "statement_date": "2017-11-01",
+        "statement_type": {
+            "statement_type": "Claim"
+        },
+        "ruling_headline": "Can 8 in 10 people get health coverage for under $75? Not most Americans",
+        "ruling": {
+            "canonical_ruling_graphic": "http://static.politifact.com.s3.amazonaws.com/rulings/tom-halftrue.png",
+            "ruling_slug": "half-true",
+            "ruling": "Half-True"
+        },
+        "subject": [
+            {
+                "subject": "Health Care",
+                "subject_slug": "health-care"
+            }
+        ],
+        "ruling_link_text": "Under 4 percent of Americans",
+        "speaker": {
+            "last_name": "Obama",
+            "canonical_photo": "http://static.politifact.com.s3.amazonaws.com/politifact/mugs/NYT_OBAMA_1.jpg",
+            "name_slug": "barack-obama",
+            "first_name": "Barack",
+            "party": {
+                "party": "Democrat",
+                "party_slug": "democrat"
+            }
+        },
+        "target": [],
+        "statement_url": "/truth-o-meter/statements/2017/nov/06/barack-obama/can-eight-10-people-get-health-coverage-under-75-n/",
+        "statement_context": "a video",
+        "ruling_date": "2017-11-06T11:06:51",
+        "statement": "<p>&quot;Eight in 10 people this year can find plans for $75 a month or less.&quot;</p>\r\n"
+    },
+    {
+        "statement_date": "2017-08-08",
+        "statement_type": {
+            "statement_type": "Claim"
+        },
+        "ruling_headline": "No, the Obama administration didn't invent the term 'lone wolf' for terrorists",
+        "ruling": {
+            "canonical_ruling_graphic": "http://static.politifact.com.s3.amazonaws.com/rulings/tom-pantsonfire.gif",
+            "ruling_slug": "pants-fire",
+            "ruling": "Pants on Fire!"
+        },
+        "subject": [
+            {
+                "subject": "Homeland Security",
+                "subject_slug": "homeland-security"
+            },
+            {
+                "subject": "Terrorism",
+                "subject_slug": "terrorism"
+            }
+        ],
+        "ruling_link_text": "Term existed well before Obama",
+        "speaker": {
+            "last_name": "Gorka",
+            "canonical_photo": "http://static.politifact.com.s3.amazonaws.com/politifact/mugs/gorkamug.jpg",
+            "name_slug": "sebastian-gorka",
+            "first_name": "Sebastian",
+            "party": {
+                "party": "Republican",
+                "party_slug": "republican"
+            }
+        },
+        "target": [
+            {
+                "last_name": "Obama",
+                "canonical_photo": "http://static.politifact.com.s3.amazonaws.com/politifact/mugs/NYT_OBAMA_1.jpg",
+                "name_slug": "barack-obama",
+                "first_name": "Barack",
+                "party": {
+                    "party": "Democrat",
+                    "party_slug": "democrat"
+                }
+            }
+        ],
+        "statement_url": "/truth-o-meter/statements/2017/aug/10/sebastian-gorka/no-obama-administration-didnt-invent-term-lone-wol/",
+        "statement_context": "an interview with MSNBC",
+        "ruling_date": "2017-08-10T16:05:20",
+        "statement": "<p>&quot;There&#39;s no such thing as a lone wolf. ... That was a phrase invented by the last administration to make Americans stupid.&quot;</p>\r\n"
+    },
+    {
+        "statement_date": "2017-06-22",
+        "statement_type": {
+            "statement_type": "Claim"
+        },
+        "ruling_headline": "Obama blasts GOP Senate bill as tax cut for the rich at health care’s expense",
+        "ruling": {
+            "canonical_ruling_graphic": "http://static.politifact.com.s3.amazonaws.com/rulings/tom-mostlytrue.png",
+            "ruling_slug": "mostly-true",
+            "ruling": "Mostly True"
+        },
+        "subject": [
+            {
+                "subject": "Health Care",
+                "subject_slug": "health-care"
+            },
+            {
+                "subject": "Taxes",
+                "subject_slug": "taxes"
+            }
+        ],
+        "ruling_link_text": "Robin Hood in reverse",
+        "speaker": {
+            "last_name": "Obama",
+            "canonical_photo": "http://static.politifact.com.s3.amazonaws.com/politifact/mugs/NYT_OBAMA_1.jpg",
+            "name_slug": "barack-obama",
+            "first_name": "Barack",
+            "party": {
+                "party": "Democrat",
+                "party_slug": "democrat"
+            }
+        },
+        "target": [],
+        "statement_url": "/truth-o-meter/statements/2017/jun/26/barack-obama/obama-blasts-gop-senate-bill-tax-cut-rich-health-c/",
+        "statement_context": "a Facebook post",
+        "ruling_date": "2017-06-26T16:18:02",
+        "statement": "<p>The Senate bill &quot;hands enormous tax cuts to the rich and to the drug and insurance industries, paid for by cutting health care for everybody else.&quot;</p>\r\n"
+    },
+    {
+        "statement_date": "2017-03-23",
+        "statement_type": {
+            "statement_type": "Claim"
+        },
+        "ruling_headline": "Obama: No premium hike for 'vast majority' covered on government exchanges",
+        "ruling": {
+            "canonical_ruling_graphic": "http://static.politifact.com.s3.amazonaws.com/rulings/tom-mostlytrue.png",
+            "ruling_slug": "mostly-true",
+            "ruling": "Mostly True"
+        },
+        "subject": [
+            {
+                "subject": "Health Care",
+                "subject_slug": "health-care"
+            }
+        ],
+        "ruling_link_text": "Insulated from premium hikes",
+        "speaker": {
+            "last_name": "Obama",
+            "canonical_photo": "http://static.politifact.com.s3.amazonaws.com/politifact/mugs/NYT_OBAMA_1.jpg",
+            "name_slug": "barack-obama",
+            "first_name": "Barack",
+            "party": {
+                "party": "Democrat",
+                "party_slug": "democrat"
+            }
+        },
+        "target": [],
+        "statement_url": "/truth-o-meter/statements/2017/mar/23/barack-obama/obama-no-premium-hike-vast-majority-covered-govern/",
+        "statement_context": "a statement on the 7th anniversary of the Affordable Care Act",
+        "ruling_date": "2017-03-23T16:57:11",
+        "statement": "<p>&quot;The vast majority of marketplace enrollees have experienced no average premium hike at all.&quot;</p>\r\n\r\n<div>&nbsp;</div>\r\n"
+    },
+    {
+        "statement_date": "2017-03-20",
+        "statement_type": {
+            "statement_type": "Claim"
+        },
+        "ruling_headline": "Devin Nunes oversimplifies timeline of Obama 'reset' with Russia",
+        "ruling": {
+            "canonical_ruling_graphic": "http://static.politifact.com.s3.amazonaws.com/rulings/tom-halftrue.png",
+            "ruling_slug": "half-true",
+            "ruling": "Half-True"
+        },
+        "subject": [
+            {
+                "subject": "Foreign Policy",
+                "subject_slug": "foreign-policy"
+            }
+        ],
+        "ruling_link_text": "Revoking the reset",
+        "speaker": {
+            "last_name": "Nunes",
+            "canonical_photo": "http://static.politifact.com.s3.amazonaws.com/politifact/mugs/Nunes_mug.jpg",
+            "name_slug": "devin-nunes",
+            "first_name": "Devin",
+            "party": {
+                "party": "Republican",
+                "party_slug": "republican"
+            }
+        },
+        "target": [
+            {
+                "last_name": "Obama",
+                "canonical_photo": "http://static.politifact.com.s3.amazonaws.com/politifact/mugs/NYT_OBAMA_1.jpg",
+                "name_slug": "barack-obama",
+                "first_name": "Barack",
+                "party": {
+                    "party": "Democrat",
+                    "party_slug": "democrat"
+                }
+            }
+        ],
+        "statement_url": "/truth-o-meter/statements/2017/mar/20/devin-nunes/devin-nunes-oversimplifies-timeline-obama-reset-ru/",
+        "statement_context": "a House Intelligence Committee hearing",
+        "ruling_date": "2017-03-20T17:20:19",
+        "statement": "<p>&quot;In recent years ... the Obama administration was committed to the notion, against all evidence, that we could reset relations with Putin.&quot;</p>\r\n"
+    }
+]
